@@ -1,6 +1,9 @@
-source ./colors.sh
+#!/usr/bin/env bash
+set -euo pipefail
 
-echo -e "${RED}🗑️ Resetting database and containers...${NC}"
-./docker-down.sh
-./docker-up.sh
-echo -e "${GREEN}✅ Database reset and containers are running!${NC}"
+source ./scripts/colors.sh
+
+echo -e "${YELLOW}⟳ Resetting database and containers...${NC}"
+./scripts/docker-down.sh
+./scripts/docker-up.sh
+echo -e "${GREEN}✔︎ Database reset and containers are running!${NC}"

@@ -1,0 +1,5 @@
+# Production environment settings
+# (will be overridden by environment variables in the cloud)
+spring:
+  jpa:
+    show-sql: false

@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+README.md
+
+# Project folders
+docker/
+scripts/
+.idea/
+.vscode/
+build/
+.gradle/
+gradle/
+
+# Gradle wrapper files (except those needed in build)
+gradlew
+gradlew.bat
+*.iml
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Local environment
+.env
+*.local
