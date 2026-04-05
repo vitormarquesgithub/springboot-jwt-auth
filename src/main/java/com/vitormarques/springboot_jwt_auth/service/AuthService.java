@@ -24,7 +24,6 @@ public class AuthService {
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
 
-    // Blacklist simples em memória (para produção, usar Redis)
     private final Set<String> tokenBlacklist = ConcurrentHashMap.newKeySet();
 
     public AuthService(AuthenticationManager authenticationManager,
@@ -61,7 +60,6 @@ public class AuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         if (jwtUtils.isTokenValid(refreshToken, userDetails) && !isTokenRevoked(refreshToken)) {
             Map<String, Object> claims = new HashMap<>();
-            // Podemos buscar claims adicionais do banco, se necessário
             String newAccessToken = jwtUtils.generateAccessToken(userDetails, claims);
             return new AuthResponse(newAccessToken, refreshToken);
         }
@@ -70,7 +68,6 @@ public class AuthService {
 
     public void logout(String accessToken) {
         tokenBlacklist.add(accessToken);
-        // Idealmente, também invalidar o refresh token associado
     }
 
     public boolean isTokenRevoked(String token) {

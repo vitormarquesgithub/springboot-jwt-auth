@@ -38,7 +38,6 @@ public class User extends AbstractEntity implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()

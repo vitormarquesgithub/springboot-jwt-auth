@@ -35,11 +35,11 @@ public class JwtUtils {
 
     private String buildToken(UserDetails userDetails, Map<String, Object> claims, long expirationMillis) {
         return Jwts.builder()
-                .claims(claims) // Método atualizado: 'claims()'
-                .subject(userDetails.getUsername()) // Método atualizado: 'subject()'
-                .issuedAt(new Date()) // Método atualizado: 'issuedAt()'
-                .expiration(new Date(System.currentTimeMillis() + expirationMillis)) // Método atualizado: 'expiration()'
-                .signWith(jwtKeyManager.getSecretKey(), Jwts.SIG.HS256) // Método atualizado: 'Jwts.SIG.HS256'
+                .claims(claims) 
+                .subject(userDetails.getUsername()) 
+                .issuedAt(new Date()) 
+                .expiration(new Date(System.currentTimeMillis() + expirationMillis)) 
+                .signWith(jwtKeyManager.getSecretKey(), Jwts.SIG.HS256) // -> RS256
                 .compact();
     }
 
@@ -63,10 +63,10 @@ public class JwtUtils {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .verifyWith(jwtKeyManager.getSecretKey()) // Método atualizado: 'verifyWith()'
+                .verifyWith(jwtKeyManager.getSecretKey())
                 .build()
-                .parseSignedClaims(token) // Método atualizado: 'parseSignedClaims()'
-                .getPayload(); // Método atualizado: 'getPayload()'
+                .parseSignedClaims(token) 
+                .getPayload(); 
     }
 
     private boolean isTokenExpired(String token) {
