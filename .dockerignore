@@ -13,13 +13,6 @@ scripts/
 .vscode/
 build/
 .gradle/
-gradle/
-
-# Gradle wrapper files (except those needed in build)
-gradlew
-gradlew.bat
-*.iml
-*.log
 
 # Temporary files
 *.tmp
