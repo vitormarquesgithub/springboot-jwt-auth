@@ -1,5 +1,6 @@
 package com.vitormarques.springboot_jwt_auth.security;
 
+import com.vitormarques.springboot_jwt_auth.service.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 
 @Component
@@ -19,10 +21,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
+    private final TokenBlacklistService tokenBlacklistService;
 
-    public JwtAuthenticationFilter(JwtUtils jwtUtils, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtUtils jwtUtils,
+                                   UserDetailsService userDetailsService,
+                                   TokenBlacklistService tokenBlacklistService) {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Override
@@ -39,6 +45,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String username = jwtUtils.extractUsername(jwt);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (tokenBlacklistService.isTokenRevoked(jwt)) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token has been revoked");
+                return;
+            }
+
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtUtils.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
