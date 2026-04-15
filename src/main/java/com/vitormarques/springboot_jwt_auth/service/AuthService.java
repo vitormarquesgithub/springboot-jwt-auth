@@ -16,11 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AuthService {
@@ -31,22 +31,22 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-
-    // In-memory blacklist for tokens (use Redis in production)
-    private final Set<String> tokenBlacklist = ConcurrentHashMap.newKeySet();
+    private final TokenBlacklistService tokenBlacklistService;
 
     public AuthService(AuthenticationManager authenticationManager,
                        JwtUtils jwtUtils,
                        UserDetailsService userDetailsService,
                        UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       RoleRepository roleRepository) {
+                       RoleRepository roleRepository,
+                       TokenBlacklistService tokenBlacklistService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     public AuthResponse login(AuthRequest request) {
@@ -92,7 +92,7 @@ public class AuthService {
     public AuthResponse refreshAccessToken(String refreshToken) {
         String username = jwtUtils.extractUsername(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        if (jwtUtils.isTokenValid(refreshToken, userDetails) && !isTokenRevoked(refreshToken)) {
+        if (jwtUtils.isTokenValid(refreshToken, userDetails) && !tokenBlacklistService.isTokenRevoked(refreshToken)) {
             Map<String, Object> claims = new HashMap<>();
             String newAccessToken = jwtUtils.generateAccessToken(userDetails, claims);
             return new AuthResponse(newAccessToken, refreshToken);
@@ -101,10 +101,6 @@ public class AuthService {
     }
 
     public void logout(String accessToken) {
-        tokenBlacklist.add(accessToken);
-    }
-
-    public boolean isTokenRevoked(String token) {
-        return tokenBlacklist.contains(token);
+        tokenBlacklistService.revokeToken(accessToken);
     }
 }
