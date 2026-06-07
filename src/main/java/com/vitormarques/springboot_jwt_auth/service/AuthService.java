@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,6 +31,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final TokenBlacklistService tokenBlacklistService;
+    private final CurrentTokenCacheService currentTokenCacheService;
 
     public AuthService(AuthenticationManager authenticationManager,
                        JwtUtils jwtUtils,
@@ -39,7 +39,8 @@ public class AuthService {
                        UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
-                       TokenBlacklistService tokenBlacklistService) {
+                       TokenBlacklistService tokenBlacklistService,
+                       CurrentTokenCacheService currentTokenCacheService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
@@ -47,6 +48,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.tokenBlacklistService = tokenBlacklistService;
+        this.currentTokenCacheService = currentTokenCacheService;
     }
 
     public AuthResponse login(AuthRequest request) {
@@ -65,6 +67,9 @@ public class AuthService {
 
         String accessToken = jwtUtils.generateAccessToken(userDetails, claims);
         String refreshToken = jwtUtils.generateRefreshToken(userDetails);
+
+        currentTokenCacheService.storeToken(user.getUsername(), accessToken);
+
         return new AuthResponse(accessToken, refreshToken);
     }
 
@@ -92,9 +97,21 @@ public class AuthService {
     public AuthResponse refreshAccessToken(String refreshToken) {
         String username = jwtUtils.extractUsername(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        
         if (jwtUtils.isTokenValid(refreshToken, userDetails) && !tokenBlacklistService.isTokenRevoked(refreshToken)) {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
             Map<String, Object> claims = new HashMap<>();
+            claims.put("id", user.getId().toString());
+            claims.put("roles", user.getAuthorities());
+            claims.put("iss", "springboot-jwt-auth");
+            claims.put("aud", "jwt-api");
+
             String newAccessToken = jwtUtils.generateAccessToken(userDetails, claims);
+            
+            currentTokenCacheService.storeToken(username, newAccessToken);
+            
             return new AuthResponse(newAccessToken, refreshToken);
         }
         throw new RuntimeException("Invalid or revoked refresh token");

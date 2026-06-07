@@ -5,7 +5,7 @@ help:
 	@echo "  make up         - Start Docker containers (PostgreSQL + App)"
 	@echo "  make down       - Stop Docker containers"
 	@echo "  make logs       - Show Spring Boot logs (follow mode)"
-	@echo "  make reset      - Full reset (down + up)"
+	@echo "  make reset      - Restart containers (down + up) without removing volumes"
 	@echo "  make rebuild    - Rebuild images without cache and start"
 	@echo "  make dev-run    - Run app locally with 'dev' profile (requires DB container)"
 	@echo "  make dev-stop   - Stop development containers (PostgreSQL + Redis)"
