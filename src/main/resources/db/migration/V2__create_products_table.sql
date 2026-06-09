@@ -1,0 +1,9 @@
+CREATE TABLE products (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(1000),
+    price DECIMAL(10,2) NOT NULL,
+    stock INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
