@@ -46,6 +46,7 @@ class AuthServiceTest {
     private JwtUtils jwtUtils;
 
     @Mock
+    @SuppressWarnings("unused")
     private UserDetailsService userDetailsService;
 
     @Mock
@@ -58,6 +59,7 @@ class AuthServiceTest {
     private RoleRepository roleRepository;
 
     @Mock
+    @SuppressWarnings("unused")
     private TokenBlacklistService tokenBlacklistService;
 
     @Mock
@@ -71,6 +73,7 @@ class AuthServiceTest {
     private UserDetails userDetails;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setUp() {
         userRole = new Role();
         userRole.setId(UUID.randomUUID());

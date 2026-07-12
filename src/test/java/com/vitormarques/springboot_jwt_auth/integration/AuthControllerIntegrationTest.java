@@ -30,6 +30,7 @@ class AuthControllerIntegrationTest {
 
     @Container
     @ServiceConnection
+    @SuppressWarnings("unused")
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("testdb")
             .withUsername("test")
@@ -45,6 +46,7 @@ class AuthControllerIntegrationTest {
     private UserRepository userRepository;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void cleanDb() {
         userRepository.deleteAll();
     }

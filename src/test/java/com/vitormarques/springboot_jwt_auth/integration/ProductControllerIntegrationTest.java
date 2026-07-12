@@ -47,6 +47,7 @@ class ProductControllerIntegrationTest {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void bypassJwtFilter() throws Exception {
         org.mockito.Mockito.doAnswer(invocation -> {
             jakarta.servlet.ServletRequest request = invocation.getArgument(0);
