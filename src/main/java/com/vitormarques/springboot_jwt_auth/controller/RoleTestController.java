@@ -30,7 +30,7 @@ public class RoleTestController {
     @GetMapping("/user")
     @Operation(summary = "User access", description = "Accessible by ROLE_USER or ROLE_ADMIN")
     @ApiResponse(responseCode = "200", description = "Access granted")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     public String userAccess() {
         return "User content – accessible by USER or ADMIN";
     }
@@ -39,7 +39,7 @@ public class RoleTestController {
     @Operation(summary = "Admin access", description = "Accessible only by ROLE_ADMIN")
     @ApiResponse(responseCode = "200", description = "Access granted")
     @ApiResponse(responseCode = "403", description = "Forbidden – insufficient role")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String adminAccess() {
         return "Admin content – only ADMIN";
     }

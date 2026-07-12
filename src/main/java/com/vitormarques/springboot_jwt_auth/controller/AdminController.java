@@ -24,7 +24,7 @@ public class AdminController {
 
     @PutMapping("/users/roles")
     @Operation(summary = "Update user roles (Admin only)")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> updateUserRoles(@Valid @RequestBody UpdateRoleRequest request) {
         userRoleUpdateService.updateUserRoles(request.getUsername(), request.getRoleNames());
         return ResponseEntity.ok().build();

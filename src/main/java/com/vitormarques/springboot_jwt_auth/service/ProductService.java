@@ -21,21 +21,21 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAuthority('USER', 'ADMIN')")
     public List<ProductResponse> findAll() {
         return productRepository.findAll().stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAuthority('USER', 'ADMIN')")
     public ProductResponse findById(@NonNull UUID id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
         return toResponse(product);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ProductResponse create(ProductRequest request) {
         Product product = new Product();
@@ -60,7 +60,7 @@ public class ProductService {
         return toResponse(updated);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void delete(@NonNull UUID id) {
         if (!productRepository.existsById(id)) {
