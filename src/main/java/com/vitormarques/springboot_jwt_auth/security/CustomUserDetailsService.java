@@ -1,10 +1,11 @@
 package com.vitormarques.springboot_jwt_auth.security;
 
-import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

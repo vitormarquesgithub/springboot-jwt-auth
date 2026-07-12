@@ -1,11 +1,12 @@
 package com.vitormarques.springboot_jwt_auth.dto;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
-import java.math.BigDecimal;
 
 @Data
 public class ProductRequest {

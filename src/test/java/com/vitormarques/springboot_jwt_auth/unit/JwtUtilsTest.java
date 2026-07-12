@@ -1,16 +1,17 @@
 package com.vitormarques.springboot_jwt_auth.unit;
 
-import com.vitormarques.springboot_jwt_auth.security.JwtKeyManager;
-import com.vitormarques.springboot_jwt_auth.security.JwtUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.vitormarques.springboot_jwt_auth.security.JwtKeyManager;
+import com.vitormarques.springboot_jwt_auth.security.JwtUtils;
 
 class JwtUtilsTest {
 

@@ -1,15 +1,17 @@
 package com.vitormarques.springboot_jwt_auth.config;
 
-import com.vitormarques.springboot_jwt_auth.entity.Role;
-import com.vitormarques.springboot_jwt_auth.entity.User;
-import com.vitormarques.springboot_jwt_auth.repository.RoleRepository;
-import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Set;
+
+import com.vitormarques.springboot_jwt_auth.entity.Role;
+import com.vitormarques.springboot_jwt_auth.entity.User;
+import com.vitormarques.springboot_jwt_auth.repository.RoleRepository;
+import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
 
 @Component
 public class AdminInitializer implements CommandLineRunner {

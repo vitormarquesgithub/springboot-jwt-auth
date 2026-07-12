@@ -1,10 +1,13 @@
 package com.vitormarques.springboot_jwt_auth.security;
 
-import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
+
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
+
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtKeyManager {

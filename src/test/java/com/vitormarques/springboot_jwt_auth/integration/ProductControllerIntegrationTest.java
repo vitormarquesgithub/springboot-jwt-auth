@@ -1,30 +1,33 @@
 package com.vitormarques.springboot_jwt_auth.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vitormarques.springboot_jwt_auth.controller.ProductController;
-import com.vitormarques.springboot_jwt_auth.dto.ProductRequest;
-import com.vitormarques.springboot_jwt_auth.dto.ProductResponse;
-import com.vitormarques.springboot_jwt_auth.service.ProductService;
-import com.vitormarques.springboot_jwt_auth.security.JwtAuthenticationFilter;
-import com.vitormarques.springboot_jwt_auth.config.SecurityConfig;
-import org.springframework.context.annotation.Import;
-import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vitormarques.springboot_jwt_auth.config.SecurityConfig;
+import com.vitormarques.springboot_jwt_auth.controller.ProductController;
+import com.vitormarques.springboot_jwt_auth.dto.ProductRequest;
+import com.vitormarques.springboot_jwt_auth.dto.ProductResponse;
+import com.vitormarques.springboot_jwt_auth.security.JwtAuthenticationFilter;
+import com.vitormarques.springboot_jwt_auth.service.ProductService;
 
 @WebMvcTest(ProductController.class)
 @Import(SecurityConfig.class)

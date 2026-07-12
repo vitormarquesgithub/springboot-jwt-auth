@@ -1,10 +1,5 @@
 package com.vitormarques.springboot_jwt_auth.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vitormarques.springboot_jwt_auth.dto.AuthRequest;
-import com.vitormarques.springboot_jwt_auth.dto.RegisterRequest;
-import com.vitormarques.springboot_jwt_auth.entity.User;
-import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +9,18 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vitormarques.springboot_jwt_auth.dto.AuthRequest;
+import com.vitormarques.springboot_jwt_auth.dto.RegisterRequest;
+import com.vitormarques.springboot_jwt_auth.entity.User;
+import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
