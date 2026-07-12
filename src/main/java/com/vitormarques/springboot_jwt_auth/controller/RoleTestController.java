@@ -30,7 +30,7 @@ public class RoleTestController {
     @GetMapping("/user")
     @Operation(summary = "User access", description = "Accessible by ROLE_USER or ROLE_ADMIN")
     @ApiResponse(responseCode = "200", description = "Access granted")
-    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
     public String userAccess() {
         return "User content – accessible by USER or ADMIN";
     }

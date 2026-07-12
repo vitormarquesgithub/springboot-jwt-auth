@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: test
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  flyway:
+    enabled: true
+
+jwt:
+  secret: testSecretKeyForHS256ThatIsAtLeast32CharsLong
+  expiration: 3600000
+  refresh-expiration: 604800000
+
+app:
+  admin:
+    username: admin
+    email: admin@test.com
+    password: admin123
+  security:
+    immediate-revocation: true

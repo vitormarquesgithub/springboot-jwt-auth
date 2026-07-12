@@ -9,6 +9,7 @@ import com.vitormarques.springboot_jwt_auth.entity.User;
 import com.vitormarques.springboot_jwt_auth.repository.RoleRepository;
 import com.vitormarques.springboot_jwt_auth.repository.UserRepository;
 import com.vitormarques.springboot_jwt_auth.security.JwtUtils;
+import com.vitormarques.springboot_jwt_auth.exception.UsernameAlreadyTakenException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -75,7 +76,7 @@ public class AuthService {
 
     public RegisterResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already taken");
+            throw new UsernameAlreadyTakenException("Username already taken");
         }
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");

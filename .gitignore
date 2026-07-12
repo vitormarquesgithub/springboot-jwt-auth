@@ -29,9 +29,6 @@ replay_pid*
 # Environment variables
 .env
 
-# Gradle
-.gradle/
-
 # OS generated files
 .DS_Store
 .DS_Store?
@@ -39,4 +36,10 @@ replay_pid*
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db
+Thumbs.db.gradle/
+
+# Gradle
+.gradle/
+build/
+bin/
+nb-cache/
